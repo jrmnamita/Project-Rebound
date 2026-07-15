@@ -99,7 +99,7 @@ Contributions will be very welcome once the foundation is in place. A `CONTRIBUT
 
 ## Support
 
-This game is **free to play, forever, with no advertisements** — and it will stay that way. There is nothing to buy in the game and never will be. If you'd like to support development, an optional [Ko-fi](https://ko-fi.com) donation link is planned. That's it — playing it and sharing it is support enough.
+This game is **free to play, forever, with no advertisements** — and it will stay that way. There is nothing to buy in the game and never will be. If you'd like to support development, an optional [Ko-fi](https://ko-fi.com/amonita) donation link is planned. That's it — playing it and sharing it is support enough.
 
 ## License
 
