@@ -1,0 +1,217 @@
+/* Ito ang mga "Global Settings" para sa kulay at itsura ng game */
+:root {
+    --primary-red: #ff3e3e;       /* Pangunahing kulay ng bola */
+    --primary-red-light: #ff6b6b;
+    --primary-red-dark: #c02d2d;
+    --sky-blue: #70d6ff;          /* Kulay ng langit */
+    --grass-green: #4ade80;       /* Kulay ng damo */
+    --grass-green-dark: #22c55e;
+    --cloud-white: #ffffff;
+    --text-dark: #1e293b;
+    --text-light: #f8fafc;
+    --overlay-bg: rgba(15, 23, 42, 0.8); /* Background ng start/gameover screen */
+    --glass-bg: rgba(255, 255, 255, 0.1);  /* Efekto na parang salamin (Glassmorphism) */
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Settings para sa buong page */
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: #000;
+    color: var(--text-light);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Bawal mag-scroll ang page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ang "Kahon" kung saan nakalagay ang game */
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    max-height: 800px;
+    background: var(--sky-blue); /* Kulay langit ang background */
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* HUD */
+#hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* HUD: Ang mga box sa taas na nagpapakita ng score */
+.score-container, .high-score-container, .phase-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px); /* Blur effect (parang malabong salamin) */
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    padding: 10px 20px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label {
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+}
+
+#score-val, #best-val {
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+}
+
+#phase-text {
+    font-weight: 900;
+    color: var(--primary-red);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Overlays */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.content {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 32px;
+    backdrop-filter: blur(12px);
+    max-width: 90%;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 0.9;
+    margin-bottom: 10px;
+    background: linear-gradient(180deg, var(--primary-red-light), var(--primary-red-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+h2.pop-text {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--primary-red);
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    opacity: 0.7;
+    margin-bottom: 30px;
+}
+
+/* Styling para sa mga Buttons */
+button {
+    background: var(--primary-red);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 8px 0 var(--primary-red-dark); /* 3D effect sa button */
+}
+
+button:hover {
+    background: var(--primary-red-light);
+    transform: translateY(-2px); /* Umaangat nang konti kapag tinututukan */
+}
+
+button:active {
+    transform: translateY(4px);    /* Lumulubog kapag pinipindot */
+    box-shadow: 0 4px 0 var(--primary-red-dark);
+}
+
+.controls-hint {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+}
+
+.final-score {
+    margin-bottom: 30px;
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.score-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 10px;
+}
+
+.score-row span:first-child {
+    font-weight: 700;
+    opacity: 0.6;
+}
+
+.score-row span:last-child {
+    font-weight: 900;
+    font-size: 1.5rem;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+#start-btn {
+    animation: pulse 2s infinite ease-in-out;
+}
