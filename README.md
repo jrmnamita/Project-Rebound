@@ -1,4 +1,4 @@
-# Project Rebound *(working title)*
+# Project Rebound *(Orb Arena)*
 
 > **Codename:** Project Rebound — the final public game title may change before release.
 
