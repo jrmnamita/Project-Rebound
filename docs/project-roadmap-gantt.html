@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Project Rebound — Roadmap & Gantt</title>
+<style>
+  :root{
+    --bg:#0d1120; --panel:#151a2e; --panel2:#1c2340; --grid:#232b4d;
+    --text:#eef1ff; --dim:#9aa3c7; --line:#2b3358;
+    --done:#4ade80; --release:#38bdf8; --p1:#a78bfa; --p2:#fb923c;
+    --p3:#f472b6; --p4:#facc15; --milestone:#fbbf24;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;
+    padding:28px 22px 60px;line-height:1.4}
+  h1{font-size:1.7rem;font-weight:900;letter-spacing:-.02em}
+  h1 span{color:var(--release)}
+  .sub{color:var(--dim);margin:6px 0 22px;font-size:.9rem;max-width:70ch}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:20px;font-size:.78rem}
+  .legend span{display:inline-flex;align-items:center;gap:6px;color:var(--dim)}
+  .sw{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .diamond{width:12px;height:12px;background:var(--milestone);transform:rotate(45deg);display:inline-block;border-radius:2px}
+
+  .chart{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow-x:auto;padding:0}
+  .grid{display:grid;grid-template-columns:230px repeat(28,minmax(30px,1fr));min-width:1050px}
+  .hcell{padding:8px 4px;text-align:center;font-size:.66rem;color:var(--dim);border-left:1px solid var(--grid);
+    position:sticky;top:0;background:var(--panel2)}
+  .hlabel{position:sticky;left:0;background:var(--panel2);z-index:3;border-bottom:1px solid var(--line)}
+  .month{grid-column:span 4;text-align:center;font-weight:800;font-size:.7rem;color:var(--text);
+    padding:7px 0;background:var(--panel2);border-left:1px solid var(--line);letter-spacing:.05em}
+  .m0{grid-column:2/6}.m1{grid-column:6/10}.m2{grid-column:10/14}.m3{grid-column:14/18}
+  .m4{grid-column:18/22}.m5{grid-column:22/26}.m6{grid-column:26/30}
+
+  .rowlabel{padding:9px 12px;font-size:.78rem;position:sticky;left:0;background:var(--panel);
+    z-index:2;border-top:1px solid var(--grid);display:flex;align-items:center;gap:7px;font-weight:600}
+  .rowlabel small{color:var(--dim);font-weight:400;font-size:.68rem}
+  .track{grid-column:2/30;position:relative;border-top:1px solid var(--grid);height:38px}
+  .track .cells{position:absolute;inset:0;display:grid;grid-template-columns:repeat(28,1fr)}
+  .track .cells div{border-left:1px solid var(--grid)}
+  .bar{position:absolute;top:8px;height:22px;border-radius:6px;display:flex;align-items:center;
+    padding:0 9px;font-size:.68rem;font-weight:700;color:#0d1120;white-space:nowrap;overflow:hidden}
+  .section{grid-column:1/30;background:var(--panel2);padding:8px 12px;font-weight:900;font-size:.8rem;
+    position:sticky;left:0;border-top:2px solid var(--line);letter-spacing:.03em}
+  .ms{position:absolute;top:6px;width:14px;height:14px;background:var(--milestone);transform:rotate(45deg);
+    border-radius:3px;z-index:4;box-shadow:0 0 0 3px var(--panel)}
+  .mslabel{position:absolute;top:-2px;font-size:.62rem;color:var(--milestone);font-weight:800;white-space:nowrap}
+
+  .grid-week{background:linear-gradient(var(--grid),var(--grid)) no-repeat;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:26px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .card h3{font-size:.9rem;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+  .card p,.card li{font-size:.8rem;color:var(--dim);line-height:1.5}
+  .card ul{margin:6px 0 0 16px}
+  .tag{font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800;color:#0d1120}
+  .foot{margin-top:24px;color:var(--dim);font-size:.72rem;max-width:80ch}
+  .depmap{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .depmap h3{font-size:1rem;margin-bottom:12px}
+  .deprow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:.8rem;margin:10px 0;color:var(--text)}
+  .chip{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 11px;font-weight:600}
+  .arrow{color:var(--dim)}
+  .ok{color:var(--done);font-weight:800}
+  .warn{color:var(--p2);font-weight:800}
+</style>
+</head>
+<body>
+  <h1>Project <span>Rebound</span> — Roadmap &amp; Gantt</h1>
+  <p class="sub">Effort-weeks for a solo developer, from today's shipped Phase 1 foundation through the public launch, live 4-player multiplayer, and mobile. Calendar time depends on hours per week — treat the week numbers as sequence and relative effort, not fixed dates. Milestones ◆ mark the moments the vision becomes real to players.</p>
+
+  <div class="legend">
+    <span><i class="sw" style="background:var(--done)"></i>Done (shipped)</span>
+    <span><i class="sw" style="background:var(--release)"></i>Release prep</span>
+    <span><i class="sw" style="background:var(--p1)"></i>Phase 1 closeout</span>
+    <span><i class="sw" style="background:var(--p2)"></i>Phase 2 — Live Rooms</span>
+    <span><i class="sw" style="background:var(--p3)"></i>Phase 3 — Community</span>
+    <span><i class="sw" style="background:var(--p4)"></i>Phase 4 — Depth</span>
+    <span><i class="diamond"></i>Milestone</span>
+  </div>
+
+  <div class="chart">
+    <div class="grid">
+      <!-- header -->
+      <div class="hcell hlabel" style="text-align:left;padding-left:12px;font-weight:800;color:var(--text)">Task</div>
+      <div class="month m0">Month 1</div><div class="month m1">Month 2</div>
+      <div class="month m2">Month 3</div><div class="month m3">Month 4</div>
+      <div class="month m4">Month 5</div><div class="month m5">Month 6</div>
+      <div class="month m6">Month 7</div>
+
+      <!-- DONE -->
+      <div class="section" style="border-top:none">✅ ALREADY SHIPPED — Phase 1 Foundation (12 modules, 173 tests green, playable offline)</div>
+      <div class="rowlabel">sim-core + web + protocol + services <small>done</small></div>
+      <div class="track"><div class="cells"></div>
+        <div class="bar" style="left:0;width:3.57%;background:var(--done)"></div>
+        <div class="bar" style="left:0;right:auto;width:100%;background:transparent;color:var(--dim);padding-left:0;font-weight:400">◀ built over this session — deterministic core, portrait render, solo match, all 5 power-ups, replay/statehash, local persistence</div>
+      </div>
+
+      <!-- RELEASE PREP -->
+      <div class="section">🚀 RELEASE PREP — lift the public-launch gate (blockers from the gate review)</div>
+      <div class="rowlabel">LICENSE + CONTRIBUTING + README refresh <small>~2d</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:0;width:5%;background:var(--release)">docs</div></div>
+      <div class="rowlabel">ESLint config + CI workflow <small>~3d</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:3.5%;width:6%;background:var(--release)">CI gate</div></div>
+      <div class="rowlabel">Fix replayTrace params bug <small>~1d</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:7%;width:4%;background:var(--release)">fix</div>
+        <div class="ms" style="left:12.5%"></div><div class="mslabel" style="left:11%;top:26px">◆ Public Netlify demo LIVE</div>
+      </div>
+
+      <!-- PHASE 1 CLOSEOUT -->
+      <div class="section">🟣 PHASE 1 CLOSEOUT — make the foundation production-grade</div>
+      <div class="rowlabel">Feel calibration vs. prototype <small>~1.5w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:11%;width:11%;background:var(--p1)">playtest & tune jump/curve</div></div>
+      <div class="rowlabel">Perf hygiene (metrics memo, HUD cache, allocs) <small>~1w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:18%;width:8%;background:var(--p1)">optimize</div></div>
+      <div class="rowlabel">Cross-engine determinism CI <small>~3d</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:22%;width:5%;background:var(--p1)">golden hashes</div></div>
+      <div class="rowlabel">Doc consolidation (ARCHITECTURE, ROADMAP, GDD) <small>~1w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:14%;width:9%;background:var(--p1)">docs</div></div>
+      <div class="rowlabel">Archive prototype + feel notes <small>~2d</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:24%;width:4%;background:var(--p1)">archive</div></div>
+
+      <!-- PHASE 2 -->
+      <div class="section">🟠 PHASE 2 — LIVE ROOMS (the multiplayer the vision is built for)</div>
+      <div class="rowlabel">Resolve rulings: termination, rooms, trust, desync <small>~1w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:28%;width:8%;background:var(--p2)">A8·B1·D3·D4 → ADRs</div></div>
+      <div class="rowlabel">Game server: room actor, lobby, countdown, rematch <small>~3w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:32%;width:18%;background:var(--p2)">Node + Socket.IO authority</div></div>
+      <div class="rowlabel">Beacon relay + effect stamping + live standings <small>~2w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:46%;width:13%;background:var(--p2)">netcode</div></div>
+      <div class="rowlabel">Client wiring (protocol already built) <small>~1.5w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:52%;width:10%;background:var(--p2)">connect client</div></div>
+      <div class="rowlabel">Supabase: anon auth, persistence, daily/global boards <small>~2w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:50%;width:13%;background:var(--p2)">backend</div></div>
+      <div class="rowlabel">Replay validation service (worker threads) <small>~1.5w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:58%;width:10%;background:var(--p2)">anti-cheat</div></div>
+      <div class="rowlabel">Deploy: server (VPS / your box) + Netlify + Supabase <small>~1w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:63%;width:7%;background:var(--p2)">ship</div>
+        <div class="ms" style="left:70%"></div><div class="mslabel" style="left:63%;top:26px">◆ MULTIPLAYER LIVE (4-player rooms)</div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="section">🟪 PHASE 3 — COMMUNITY POLISH</div>
+      <div class="rowlabel">Avatars (emoji→upload + moderation) <small>~1.5w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:70%;width:10%;background:var(--p3)">identity</div></div>
+      <div class="rowlabel">Achievements · friend boards · spectate <small>~2w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:75%;width:13%;background:var(--p3)">social</div></div>
+      <div class="rowlabel">Capacitor mobile (iOS / Android wrap) <small>~2.5w</small></div>
+      <div class="track"><div class="cells"></div><div class="bar" style="left:82%;width:15%;background:var(--p3)">mobile ship</div>
+        <div class="ms" style="left:97%"></div><div class="mslabel" style="left:84%;top:26px">◆ MOBILE SHIP</div>
+      </div>
+
+      <!-- PHASE 4 -->
+      <div class="section">🟡 PHASE 4 — COMPETITIVE DEPTH (added only as the community grows — open-ended)</div>
+      <div class="rowlabel">Matchmaking · tournaments · seasons · new modes <small>ongoing</small></div>
+      <div class="track"><div class="cells"></div>
+        <div class="bar" style="left:90%;right:0;width:10%;background:repeating-linear-gradient(45deg,var(--p4),var(--p4) 6px,#c9a41a 6px,#c9a41a 12px);color:#0d1120">later →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEPLOYMENT MAP -->
+  <div class="depmap">
+    <h3>🌐 Deployment map — where each piece runs (and why serverless only goes so far)</h3>
+    <div class="deprow">
+      <span class="chip">Frontend (apps/web)</span><span class="arrow">→</span>
+      <span class="chip">Netlify — static, free, <span class="ok">serverless ✓</span></span>
+      <span class="arrow">= solo practice, the public demo, works today</span>
+    </div>
+    <div class="deprow">
+      <span class="chip">Game server (Phase 2)</span><span class="arrow">→</span>
+      <span class="chip">always-on Node process — <span class="warn">NOT serverless</span></span>
+      <span class="arrow">holds live 60-tick rooms over WebSockets · your Pentium box* or a $5/mo VPS</span>
+    </div>
+    <div class="deprow">
+      <span class="chip">Data / auth / boards</span><span class="arrow">→</span>
+      <span class="chip">Supabase — managed, <span class="ok">serverless ✓</span></span>
+      <span class="arrow">anon accounts, match history, daily/global leaderboards</span>
+    </div>
+    <p style="font-size:.74rem;color:var(--dim);margin-top:12px">
+      * Your Pentium dual-core / 4GB DDR2 <b>can</b> host the room server for a small community (the workload is tiny) — <b>if</b> its CPU is new enough to run modern Node (test: install Node, run <code>node -v</code>; an "illegal instruction" crash = CPU too old, use a VPS instead). It must also be always-on and internet-reachable (public IP + port forward, or a Cloudflare Tunnel).<br>
+      <b>Fully-serverless multiplayer</b> is possible only by re-architecting the room server onto Cloudflare Durable Objects / PartyKit — a deliberate departure from the documented Node + Socket.IO design, so it's an ADR decision, not a default.
+    </p>
+  </div>
+
+  <div class="cards">
+    <div class="card"><h3><span class="tag" style="background:var(--release)">NOW</span> To go public</h3>
+      <p>Four additive tasks, ~1 week, zero gameplay code touched:</p>
+      <ul><li>Add OSI LICENSE + CONTRIBUTING</li><li>Refresh the (currently stale) README</li><li>ESLint + CI gate</li><li>Fix the replay-params bug</li></ul>
+    </div>
+    <div class="card"><h3><span class="tag" style="background:var(--p1)">SOON</span> To be solid</h3>
+      <p>Phase 1 closeout, ~3–4 weeks: playtest and tune the feel (the game's whole thesis), the performance-hygiene fixes from the review, cross-engine determinism CI, and the documentation consolidation.</p>
+    </div>
+    <div class="card"><h3><span class="tag" style="background:var(--p2)">BIG</span> To be the vision</h3>
+      <p>Phase 2 is the real lift, ~10–12 weeks: the authoritative game server, the netcode, Supabase, and the anti-cheat validator — this is where "up to 4 players, same world, live board" becomes real.</p>
+    </div>
+  </div>
+
+  <p class="foot">Estimates assume one developer. A part-time solo maintainer (the vision's realistic scenario) should roughly double the calendar. The critical path to a <b>public playable demo</b> is short — the Release Prep block. The critical path to the <b>multiplayer vision</b> runs through Phase 2, which is genuinely the largest chunk of remaining work. Everything before Phase 2 is already built and tested.</p>
+</body>
+</html>

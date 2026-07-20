@@ -1,0 +1,5 @@
+# Workspace map — docs/FOLDER_STRUCTURE.md §3 defines which folders may hold packages.
+packages:
+  - packages/*
+  - apps/*
+  - tests/*

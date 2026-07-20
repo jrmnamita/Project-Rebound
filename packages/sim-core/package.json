@@ -1,0 +1,14 @@
+{
+  "name": "@rebound/sim-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic simulation core of Project Rebound. Zero dependencies by law — see README.md and docs/FOLDER_STRUCTURE.md §4.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"sim-core is tested headlessly by @rebound/tests-determinism (proves the sim/render boundary holds)\""
+  }
+}

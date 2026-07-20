@@ -1,0 +1,10 @@
+{
+  "//": "The web app is OUTSIDE the determinism boundary: DOM types are allowed here (contrast sim-core/tsconfig.json, which excludes them on purpose). Strictness still comes from the shared base — CODING_STANDARDS §11.",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "types": ["vitest/globals"]
+  },
+  "include": ["src"]
+}

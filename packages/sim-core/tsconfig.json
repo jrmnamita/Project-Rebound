@@ -1,0 +1,8 @@
+{
+  "//": "sim-core deliberately has NO 'dom' lib: browser globals must not even typecheck here. This is the determinism boundary expressed as compiler configuration — CODING_STANDARDS.md §7/§8.",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"]
+  },
+  "include": ["src"]
+}

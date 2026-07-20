@@ -1,0 +1,9 @@
+{
+  "//": "Protocol code runs on both the browser client and the Node server — so like sim-core, it gets NO 'dom' lib: nothing platform-specific may leak into the wire contract.",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["vitest/globals"]
+  },
+  "include": ["src"]
+}

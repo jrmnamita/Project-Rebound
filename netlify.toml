@@ -1,0 +1,29 @@
+# Netlify configuration — publishes the SOLO-PRACTICE DEMO (frontend only).
+#
+# WHY THIS FILE: Project Rebound's frontend is a static build that runs with
+# zero backend (PROJECT_VISION / README: "the frontend runs entirely without
+# the backend; solo practice serves as the live demo"). This deploys exactly
+# that. Multiplayer needs the Phase 2 Node game server, which Netlify does NOT
+# host — see docs/project-roadmap-gantt.html (deployment map).
+#
+# This is a pnpm workspace monorepo. Netlify reads the root package.json's
+# "packageManager": "pnpm@9.15.0" field and enables pnpm via Corepack
+# automatically, then runs the build below from the repo root so the
+# workspace links (@rebound/sim-core, @rebound/services) resolve.
+
+[build]
+  # Build only the web app; its workspace deps build transitively.
+  command = "pnpm --filter @rebound/web build"
+  # Vite emits the static site here.
+  publish = "apps/web/dist"
+
+[build.environment]
+  # Node 20+ is required by the toolchain (see ClaudeContext.md / tsconfig).
+  NODE_VERSION = "20"
+
+# Single-page app: any path falls back to index.html. Harmless for this
+# one-screen game today; correct if routes are ever added.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

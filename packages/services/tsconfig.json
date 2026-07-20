@@ -1,0 +1,9 @@
+{
+  "//": "Services run in browser and Node alike, so no 'dom' lib — localStorage is probed structurally (storage.ts), never assumed. Same platform-neutrality trick as protocol and sim-core.",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["vitest/globals"]
+  },
+  "include": ["src"]
+}

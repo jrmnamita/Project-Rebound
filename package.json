@@ -1,0 +1,11 @@
+{
+  "name": "project-rebound",
+  "private": true,
+  "description": "Project Rebound (working title) — original open-source competitive arcade game. Monorepo root; see docs/FOLDER_STRUCTURE.md.",
+  "license": "SEE LICENSE — pending (README §License)",
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck"
+  }
+}

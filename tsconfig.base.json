@@ -1,0 +1,18 @@
+{
+  "//": "Single source of TypeScript strictness for every package — CODING_STANDARDS.md §11 ('strict everywhere'). Packages extend this; sim-core additionally relies on noUncheckedIndexedAccess + exactOptionalPropertyTypes being on here, per the same section.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  }
+}

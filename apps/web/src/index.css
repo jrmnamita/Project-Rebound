@@ -1,0 +1,36 @@
+/**
+ * Global styles: Tailwind layers plus the handful of rules that are
+ * about the DEVICE rather than any component — text selection and
+ * tap highlights off (this is a game surface, not a document), and
+ * the phase-banner keyframes (CSS animations are presentation-only
+ * and never gameplay-load-bearing).
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Phase transitions are "announced and felt" (GDD §8.5): the banner
+   punches in, holds just long enough to read at speed, and gets out
+   of the player's way. It ends invisible — no JS timer needed. */
+@keyframes phase-banner {
+  0% { opacity: 0; transform: scale(1.4); }
+  12% { opacity: 1; transform: scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: scale(0.96); }
+}
+.phase-banner-anim {
+  animation: phase-banner 1.6s ease-out forwards;
+}

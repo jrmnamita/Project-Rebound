@@ -1,0 +1,6 @@
+# Generated artifacts never enter the written record — CODING_STANDARDS.md / FOLDER_STRUCTURE.md §4 (root).
+node_modules/
+dist/
+coverage/
+*.log
+.DS_Store
